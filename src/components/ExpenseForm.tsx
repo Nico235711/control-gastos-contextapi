@@ -11,8 +11,13 @@ const ExpenseForm = () => {
     expenseName: "",
     amount: 0,
     category: "",
-    date: new Date
+    date: new Date()
   })
+
+  const handleChangeData = (value) => {
+console.log(value);
+
+  }
 
   return (
     <form className="space-y-5">
@@ -58,6 +63,7 @@ const ExpenseForm = () => {
         <DatePicker
           className="bg-slate-100 py-2" 
           value={expense.date}
+          onChange={handleChangeData}
         />
       </div>
 
