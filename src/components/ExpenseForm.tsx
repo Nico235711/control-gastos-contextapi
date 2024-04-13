@@ -2,8 +2,8 @@ import { categories } from "../data/categories"
 import DatePicker from 'react-date-picker';
 import 'react-date-picker/dist/DatePicker.css';
 import 'react-calendar/dist/Calendar.css';
-import { useState } from "react";
-import { DraftExpense } from "../types";
+import { ChangeEvent, useState } from "react";
+import { DraftExpense, Value } from "../types";
 
 const ExpenseForm = () => {
 
@@ -14,9 +14,23 @@ const ExpenseForm = () => {
     date: new Date()
   })
 
-  const handleChangeData = (value) => {
-console.log(value);
+  const handleChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
+    const { name, value } = e.target
+    /* verifico si el campo en el que estoy escribiendo no amount si lo es caste su
+    valor a numero */
+    const isAmountField = ["amount"].includes(name) // true o false
 
+    setExpense({
+      ...expense,
+      [name]: isAmountField ? +value : value
+    })
+  }
+
+  const handleChangeData = (value: Value) => {
+    setExpense({
+      ...expense,
+      date: value
+    })
   }
 
   return (
@@ -32,6 +46,7 @@ console.log(value);
           placeholder="Añade el nombre del gasto"
           className="bg-slate-100 p-3" 
           value={expense.expenseName}
+          onChange={handleChange}
         />
 
         <label htmlFor="amount" className="text-xl">Cantidad:</label>
@@ -42,6 +57,7 @@ console.log(value);
           placeholder="Añada la cantidad del gasto. Ej: $300"
           className="bg-slate-100 p-3" 
           value={expense.amount}
+          onChange={handleChange}
         />
 
         <label htmlFor="category" className="text-xl">Categorías:</label>
@@ -50,6 +66,7 @@ console.log(value);
           id="category"
           className="bg-slate-100 p-3"
           value={expense.category}
+          onChange={handleChange}
         >
           <option value="">-- Seleccione la categoría de su gasto --</option>
           {categories.map(category => (
