@@ -2,7 +2,7 @@ import { categories } from "../data/categories"
 import DatePicker from 'react-date-picker';
 import 'react-date-picker/dist/DatePicker.css';
 import 'react-calendar/dist/Calendar.css';
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { DraftExpense, Value } from "../types";
 import Error from "./Error";
 import { useBudget } from "../hooks/useBudget";
@@ -18,8 +18,15 @@ const ExpenseForm = () => {
 
   // creo el state para mostrar un mensaje de error
   const [error, setError] = useState("")
+  const { dispatch, state } = useBudget()
 
-  const { dispatch } = useBudget()
+  useEffect(() => {
+    if (state.editingID) {
+      const editingExpense = state.expenses.filter(currentExpense => currentExpense.id === state.editingID)[0]
+
+      setExpense(editingExpense)
+    }
+  }, [state.editingID]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target
@@ -114,7 +121,7 @@ const ExpenseForm = () => {
         />
       </div>
 
-      <input type="submit" value="Añadir Gasto" className="bg-blue-700 w-full py-2 text-white text-2xl font-bold cursor-pointer hover:bg-blue-800 transition-all rounded-lg"/>
+      <input type="submit" value={state.editingID ? "Editar gasto" : "Añadir gasto"} className="bg-blue-700 w-full py-2 text-white text-2xl font-bold cursor-pointer hover:bg-blue-800 transition-all rounded-lg"/>
     </form>
   )
 }
