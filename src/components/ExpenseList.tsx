@@ -9,7 +9,7 @@ const ExpenseList = () => {
     <div className="my-10">
       {state.expenses.length ? (
         <>
-          <p className="text-3xl text-center font-bold text-gray-600">Listado de Gastos</p>
+          <p className="text-3xl text-center font-bold text-gray-600 mb-10">Listado de Gastos</p>
           {state.expenses.map(expense => (
             <ExpenseDetail 
               key={expense.id}
