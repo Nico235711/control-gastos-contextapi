@@ -57,7 +57,13 @@ const ExpenseForm = () => {
     }
 
     setError("")
-    dispatch({ type: "add-expense", payload: { expense } })
+    // agregar o editar gasto
+    if (state.editingID) {
+      dispatch({ type: "update-expense", payload: { expense: { id: state.editingID, ...expense } } })
+  
+    } else {
+      dispatch({ type: "add-expense", payload: { expense } })
+    }
 
     // reinicio el formulario limpiando el state
     setExpense({
