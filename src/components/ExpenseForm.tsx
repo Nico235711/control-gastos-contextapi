@@ -5,6 +5,7 @@ import 'react-calendar/dist/Calendar.css';
 import { ChangeEvent, FormEvent, useState } from "react";
 import { DraftExpense, Value } from "../types";
 import Error from "./Error";
+import { useBudget } from "../hooks/useBudget";
 
 const ExpenseForm = () => {
 
@@ -17,6 +18,8 @@ const ExpenseForm = () => {
 
   // creo el state para mostrar un mensaje de error
   const [error, setError] = useState("")
+
+  const { dispatch } = useBudget()
 
   const handleChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target
@@ -47,6 +50,15 @@ const ExpenseForm = () => {
     }
 
     setError("")
+    dispatch({ type: "add-expense", payload: { expense } })
+
+    // reinicio el formulario limpiando el state
+    setExpense({
+      expenseName: "",
+      amount: 0,
+      category: "",
+      date: new Date()
+    })
   }
 
   return (
