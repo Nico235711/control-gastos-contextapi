@@ -6,18 +6,21 @@ export type BudgetActions =
   { type: "show-modal" } |
   { type: "close-modal" } |
   { type: "add-expense", payload: { expense: DraftExpense } } |
-  { type: "delete-expense", payload: { id: Expense["id"] } } 
+  { type: "delete-expense", payload: { id: Expense["id"] } } |
+  { type: "get-expense-by-id", payload: { id: Expense["id"] } } 
 
 export type BudgetState = {
   budget: number
   modal: boolean
   expenses: Expense[] // arreglo de gastos
+  editingID: Expense["id"] // id a editar
 }
 
 export const initialState: BudgetState = {
   budget: 0,
   modal: false,
-  expenses: []
+  expenses: [],
+  editingID: ""
 }
 
 // creo una funcion para que el gasto tengo un id
@@ -68,6 +71,14 @@ export const budgetReducer = (
     return {
       ...state,
       expenses: state.expenses.filter(expense => expense.id !== action.payload.id)
+    }
+  }
+
+  if (action.type === "get-expense-by-id"){
+    return {
+      ...state,
+      editingID: action.payload.id,
+      modal: true
     }
   }
 
