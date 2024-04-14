@@ -76,7 +76,7 @@ const ExpenseForm = () => {
 
   return (
     <form className="space-y-5" onSubmit={handleSubmit}>
-      <legend className="uppercase text-center text-2xl font-bold border-b-4 py-3 border-blue-500">Nuevo Gasto</legend>
+      <legend className="uppercase text-center text-2xl font-bold border-b-4 py-3 border-blue-500">{state.editingID ? "Editar Gasto" : "Nuevo Gasto"}</legend>
 
       {error && <Error>{error}</Error>}
 
@@ -127,7 +127,7 @@ const ExpenseForm = () => {
         />
       </div>
 
-      <input type="submit" value={state.editingID ? "Editar gasto" : "Añadir gasto"} className="bg-blue-700 w-full py-2 text-white text-2xl font-bold cursor-pointer hover:bg-blue-800 transition-all rounded-lg"/>
+      <input type="submit" value={state.editingID ? "Guardar Cambios" : "Añadir gasto"} className="bg-blue-700 w-full py-2 text-white text-2xl font-bold cursor-pointer hover:bg-blue-800 transition-all rounded-lg"/>
     </form>
   )
 }
