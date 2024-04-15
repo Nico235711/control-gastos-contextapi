@@ -10,7 +10,7 @@ export type BudgetActions =
   { type: "get-expense-by-id", payload: { id: Expense["id"] } } |
   { type: "update-expense", payload: { expense: Expense } } |
   { type: "reset-app" } |
-  { type: "add-filter-category", payload: { id: Category["id"] } }
+  { type: "add-filter-category", payload: { id: Category["id"] } } 
 
 export type BudgetState = {
   budget: number
