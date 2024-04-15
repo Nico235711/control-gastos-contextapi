@@ -1,4 +1,4 @@
-import { DraftExpense, Expense } from "../types"
+import { Category, DraftExpense, Expense } from "../types"
 import { v4 as uuidv4 } from 'uuid'
 
 export type BudgetActions =
@@ -9,21 +9,23 @@ export type BudgetActions =
   { type: "delete-expense", payload: { id: Expense["id"] } } |
   { type: "get-expense-by-id", payload: { id: Expense["id"] } } |
   { type: "update-expense", payload: { expense: Expense } } |
-  { type: "reset-app"} 
+  { type: "reset-app" } |
+  { type: "add-filter-category", payload: { id: Category["id"] } }
 
 export type BudgetState = {
   budget: number
   modal: boolean
   expenses: Expense[] // arreglo de gastos
   editingID: Expense["id"] // id a editar
+  filteredCategory: Category["id"]
 }
 
-const initialBudget = () : number => {
+const initialBudget = (): number => {
   const localStorageBudget = localStorage.getItem("budget")
   return localStorageBudget ? +localStorageBudget : 0
 }
 
-const initialExpenses = () : Expense[] => {
+const initialExpenses = (): Expense[] => {
   const localStorageExpenses = localStorage.getItem("expenses")
   return localStorageExpenses ? JSON.parse(localStorageExpenses) : []
 }
@@ -32,7 +34,8 @@ export const initialState: BudgetState = {
   budget: initialBudget(),
   modal: false,
   expenses: initialExpenses(),
-  editingID: ""
+  editingID: "",
+  filteredCategory: ""
 }
 
 // creo una funcion para que el gasto tengo un id
@@ -80,14 +83,14 @@ export const budgetReducer = (
     }
   }
 
-  if (action.type === "delete-expense"){
+  if (action.type === "delete-expense") {
     return {
       ...state,
       expenses: state.expenses.filter(expense => expense.id !== action.payload.id)
     }
   }
 
-  if (action.type === "get-expense-by-id"){
+  if (action.type === "get-expense-by-id") {
     return {
       ...state,
       editingID: action.payload.id,
@@ -95,7 +98,7 @@ export const budgetReducer = (
     }
   }
 
-  if (action.type === "update-expense"){
+  if (action.type === "update-expense") {
     return {
       ...state,
       expenses: state.expenses.map(expense => expense.id === action.payload.expense.id ? action.payload.expense : expense),
@@ -104,11 +107,18 @@ export const budgetReducer = (
     }
   }
 
-  if (action.type === "reset-app"){
+  if (action.type === "reset-app") {
     return {
       ...state,
       budget: 0,
       expenses: []
+    }
+  }
+
+  if (action.type === "add-filter-category") {
+    return {
+      ...state,
+      filteredCategory: action.payload.id
     }
   }
 
