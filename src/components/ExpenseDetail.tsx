@@ -24,7 +24,6 @@ const ExpenseDetail = ({ expense }: ExpenseDetailProps) => {
 
   // filtro si ambos id son iguales
   const categoryInfo = useMemo(() => categories.filter(cat => cat.id === expense.category)[0], [expense])
-  console.log(categoryInfo);
 
   const leadingActions = () => (
     <LeadingActions>
