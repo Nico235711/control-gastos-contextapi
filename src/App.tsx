@@ -22,13 +22,13 @@ function App() {
         <h1 className="text-center text-white text-4xl font-bold">Control de Gastos</h1>
       </header>
 
-      <div className="max-w-3xl mx-auto bg-white mt-10 p-10 shadow-lg rounded-lg">
+      <div className="max-w-3xl mx-5 lg:mx-auto bg-white mt-10 p-10 shadow-lg rounded-lg">
         {isValidBudget ? <BudgetTracker /> : <BudgetForm />}
       </div>
 
       {/* mostrar el modal si el presupuesto es valido */}
       {isValidBudget && (
-        <main className="max-w-3xl mx-auto py-10">
+        <main className="max-w-3xl mx-5 lg:mx-auto py-10">
           <FilterCategory />
           <ExpenseList />
           <ExpenseModal />
