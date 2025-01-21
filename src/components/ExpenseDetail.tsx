@@ -22,8 +22,10 @@ const ExpenseDetail = ({ expense }: ExpenseDetailProps) => {
 
   const { dispatch } = useBudget()
 
-  // filtro si ambos id son iguales
-  const categoryInfo = useMemo(() => categories.filter(cat => cat.id === expense.category)[0], [expense])
+  // uso find para obtener la informacion de la categoria
+  // tambien puedo usar filter pero find es mas eficiente
+  const categoryInfo = useMemo(() => categories.find(cat => cat.id === expense.category), [expense])
+  
 
   const leadingActions = () => (
     <LeadingActions>
