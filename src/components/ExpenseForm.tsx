@@ -24,10 +24,10 @@ const ExpenseForm = () => {
 
   useEffect(() => {
     if (state.editingID) {
-      const editingExpense = state.expenses.filter(currentExpense => currentExpense.id === state.editingID)[0]
+      const editingExpense = state.expenses.find(currentExpense => currentExpense.id === state.editingID)      
 
-      setExpense(editingExpense)
-      setPreviosAmount(editingExpense.amount)
+      setExpense(editingExpense!)
+      setPreviosAmount(editingExpense!.amount)
     }
   }, [state.editingID]);
 

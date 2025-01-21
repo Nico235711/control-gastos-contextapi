@@ -55,13 +55,13 @@ const ExpenseDetail = ({ expense }: ExpenseDetailProps) => {
         <div className="bg-white shadow-lg p-10 rounded-lg w-full border-b border-gray-200
         flex items-center gap-5">
           <img
-            src={`/icono_${categoryInfo.icon}.svg`}
+            src={`/icono_${categoryInfo?.icon}.svg`}
             alt="icono del gasto"
             className="w-20"
           />
         
           <div className="space-y-2 flex-1">
-            <p className="text-slate-600 text-2xl capitalize">{categoryInfo.name}</p>
+            <p className="text-slate-600 text-2xl capitalize">{categoryInfo?.name}</p>
             <p className="text-slate-600 text-2xl capitalize">{expense.expenseName}</p>
             <p className="text-slate-600 text-sm capitalize">{formatDate(expense.date!.toString())}</p>
           </div>
